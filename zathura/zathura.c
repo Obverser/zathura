@@ -154,11 +154,12 @@ zathura_update_view_ppi(zathura_t* zathura)
   if (window == NULL) {
     return;
   }
-
-  /* Testing some stuff to remove the titlebar on macOS */
-  GtkWidget* bar = gtk_header_bar_new();
-  gtk_window_set_titlebar(GTK_WINDOW(zathura->ui.session->gtk.window), bar);
-
+  
+  /* macOS titlebar flag */
+  if (g_getenv("MAC_NO_TITLE") != NULL) {
+    gtk_window_set_titlebar(GTK_WINDOW(zathura->ui.session->gtk.window), gtk_header_bar_new());
+  }
+  
   GdkDisplay* display = gtk_widget_get_display(zathura->ui.session->gtk.window);
   if (display == NULL) {
     return;
